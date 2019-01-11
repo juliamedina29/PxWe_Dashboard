@@ -94,4 +94,4 @@ for y in range(0,proj_count) :
     total_proj_areas.append(total_area_sum)
 
 #--------trying to navigate this with github------------#
-print("Help this is hard.")
+print("Help !")
