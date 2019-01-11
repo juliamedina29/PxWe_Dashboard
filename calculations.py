@@ -72,7 +72,7 @@ space_types = dict(zip(keys, values))
 #----create dict matching proj names to respective dfs----#
 keys = proj_list
 values = proj_dfs
-all_projects = dict(zip(keys, values))
+all_proj_dfs = dict(zip(keys, values))
 
 #--------------------finding area sums--------------------#
 proj_areas =[]
@@ -92,3 +92,4 @@ for y in range(0,proj_count) :
     cur_proj_df = all_proj_dfs[cur_proj_name]
     total_area_sum = cur_proj_df['sf'].sum()
     total_proj_areas.append(total_area_sum)
+
