@@ -110,6 +110,7 @@ for y in range(0,proj_count) :
         new_area_sum = cur_proj_df.loc[cur_proj_df['space_type'] == space_type_dict[cur_proj_name][x], 'sf'].sum()
         area_list.append(new_area_sum)
     proj_areas.append(area_list)
+proj_areas_dict = dict(zip(proj_list, proj_areas))
 
 #--------------------find total area---------------------#
 total_proj_areas =[]
@@ -120,16 +121,18 @@ for y in range(0,proj_count) :
     total_proj_areas.append(total_area_sum)
 
 #------------------find one proj graph-------------------#
-#set up vars#
+#proj name for indexing#
 first_proj_name = proj_list[0]
-first_proj_df = proj_df_dict[first_proj_name]
-first_proj_space_list = (space_type_dict[first_proj_name])
-print(first_proj_name)
-print(first_proj_space_list)
+first_proj_space_list = space_type_dict[first_proj_name]
+first_proj_space_area_sums_list = proj_areas_dict[first_proj_name]
+first_proj_space_dict = dict(zip(first_proj_space_list, first_proj_space_area_sums_list))
+first_proj_sum_df = pd.DataFrame(first_proj_space_dict, index=type_list)
+
 #create color list#
 first_proj_color_list = []
 for x in range(len(first_proj_space_list)) :
     first_proj_color_list.append(space_colors_dict[first_proj_space_list[x]])
+
 #do a graph?#
-first_proj_df.plot.pie(y='sf',figsize=(8, 6),colors=first_proj_color_list)
+first_proj_sum_df.plot.pie(y='sf',colors=first_proj_color_list)
 plt.show()
