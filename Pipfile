@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+
+[packages]
+numpy = "*"
+pandas = "*"
+matplotlib-pyplot = "*"
+sqlalchemy = "*"
+matplotlib = "*"
+psycopg2 = "*"
+sqlalchemy-redshift = "*"
+
+[requires]
+python_version = "3.7"
