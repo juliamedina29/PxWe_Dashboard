@@ -43,6 +43,32 @@ def fetch(connection_string, postgresql_string):
 #-------------Fetch Raw Data From Redshift----------------#
 rooms = fetch(redshift_string, PxWe_spaces)
 
+#-----------------set up color dictionary-----------------#
+space_colors_dict = {
+    'CIRCULATE':(1.0, 0.97, 0.87),
+    'MEET':(0.71,0.94,0.85),
+    'OPERATE': (0.87,0.87,0.87),
+    'WE': (1.0,0.82,0.415),
+    'WASH': (0.764,0.764,0.764),
+    'WORK':(0.67,0.867,0.905),
+    'SERVE': (0.251,0.752,0.753),
+    'INFRASTRUCTURE': (0.87,0.87,0.87),
+    'THRIVE': (1.0,0.82,0.415),
+    'BASE': (0.87,0.87,0.87),
+    'MEETING': (0.71,0.94,0.85),
+    'OTHER': (0.87,0.87,0.87),
+    'SUPPORT': (0.87,0.87,0.87),
+    'TYPICAL OFFICE': (0.67,0.867,0.905),
+    'WORKSTATIONS': (0.67,0.867,0.905),
+    'EAT & DRINK': (1.0,0.82,0.415),
+    'PLAY': (1.0,0.82,0.415),
+    'HALLWAY': (1.0, 0.97, 0.87),
+    'PHONE ROOM': (1.0,0.82,0.415),
+    'VT': (0.87,0.87,0.87),
+    'BREAKOUT': (0.71,0.94,0.85),
+    'OUTDOOR': (1.0,0.82,0.415),
+}
+
 #---------------separate projects----------------#
 proj_list = []
 for x in rooms['project'].unique() :
@@ -67,21 +93,21 @@ for x in range(0, len(proj_dfs)) :
 #----------create dict matching types to proj-------------#
 keys = proj_list
 values = proj_types
-space_types = dict(zip(keys, values))
+space_type_dict = dict(zip(keys, values))
 
 #----create dict matching proj names to respective dfs----#
 keys = proj_list
 values = proj_dfs
-all_proj_dfs = dict(zip(keys, values))
+proj_df_dict = dict(zip(keys, values))
 
 #--------------------finding area sums--------------------#
 proj_areas =[]
 for y in range(0,proj_count) :
     cur_proj_name = proj_list[y]
-    cur_proj_df = all_proj_dfs[cur_proj_name]
+    cur_proj_df = proj_df_dict[cur_proj_name]
     area_list = []
-    for x in range(len(space_types[cur_proj_name])) :
-        new_area_sum = cur_proj_df.loc[cur_proj_df['space_type'] == space_types[cur_proj_name][x], 'sf'].sum()
+    for x in range(len(space_type_dict[cur_proj_name])) :
+        new_area_sum = cur_proj_df.loc[cur_proj_df['space_type'] == space_type_dict[cur_proj_name][x], 'sf'].sum()
         area_list.append(new_area_sum)
     proj_areas.append(area_list)
 
@@ -89,9 +115,21 @@ for y in range(0,proj_count) :
 total_proj_areas =[]
 for y in range(0,proj_count) :
     cur_proj_name = proj_list[y]
-    cur_proj_df = all_proj_dfs[cur_proj_name]
+    cur_proj_df = proj_df_dict[cur_proj_name]
     total_area_sum = cur_proj_df['sf'].sum()
     total_proj_areas.append(total_area_sum)
 
-#--------trying to navigate this with github------------#
-print("Help !")
+#------------------find one proj graph-------------------#
+#set up vars#
+first_proj_name = proj_list[0]
+first_proj_df = proj_df_dict[first_proj_name]
+first_proj_space_list = (space_type_dict[first_proj_name])
+print(first_proj_name)
+print(first_proj_space_list)
+#create color list#
+first_proj_color_list = []
+for x in range(len(first_proj_space_list)) :
+    first_proj_color_list.append(space_colors_dict[first_proj_space_list[x]])
+#do a graph?#
+first_proj_df.plot.pie(y='sf',figsize=(8, 6),colors=first_proj_color_list)
+plt.show()
