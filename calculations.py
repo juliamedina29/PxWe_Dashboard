@@ -93,3 +93,5 @@ for y in range(0,proj_count) :
     total_area_sum = cur_proj_df['sf'].sum()
     total_proj_areas.append(total_area_sum)
 
+#--------trying to navigate this with github------------#
+print("Help this is hard.")
