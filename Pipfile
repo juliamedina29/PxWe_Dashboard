@@ -14,6 +14,7 @@ sqlalchemy = "*"
 matplotlib = "*"
 psycopg2 = "*"
 sqlalchemy-redshift = "*"
+random = "*"
 
 [requires]
 python_version = "3.7"

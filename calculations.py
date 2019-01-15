@@ -122,17 +122,17 @@ for y in range(0,proj_count) :
 
 #------------------find one proj graph-------------------#
 #proj name for indexing#
-first_proj_name = proj_list[0]
+first_proj_name = proj_list[1]
+#set up list of space types in the project#
 first_proj_space_list = space_type_dict[first_proj_name]
+#set up list of area sums for each type#
 first_proj_space_area_sums_list = proj_areas_dict[first_proj_name]
-first_proj_space_dict = dict(zip(first_proj_space_list, first_proj_space_area_sums_list))
-first_proj_sum_df = pd.DataFrame(first_proj_space_dict, index=type_list)
-
-#create color list#
+#create new df which only includes area sums per space type#
+first_proj_sum_df = pd.DataFrame(first_proj_space_area_sums_list, index=first_proj_space_list)
+#create plot#
+first_proj_sum_df.columns = ['sf']
 first_proj_color_list = []
-for x in range(len(first_proj_space_list)) :
-    first_proj_color_list.append(space_colors_dict[first_proj_space_list[x]])
-
-#do a graph?#
+for x in first_proj_space_list : 
+    first_proj_color_list.append(space_colors_dict[x])
 first_proj_sum_df.plot.pie(y='sf',colors=first_proj_color_list)
 plt.show()
