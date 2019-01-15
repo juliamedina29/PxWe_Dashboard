@@ -43,6 +43,10 @@ def fetch(connection_string, postgresql_string):
 #-------------Fetch Raw Data From Redshift----------------#
 rooms = fetch(redshift_string, PxWe_spaces)
 
+#-----------Function for finding avg of list--------------#
+def Average(lst): 
+    return sum(lst) / len(lst)
+
 #-----------------set up color dictionary-----------------#
 space_colors_dict = {
     'CIRCULATE':(1.0, 0.97, 0.87),
@@ -119,10 +123,16 @@ for y in range(0,proj_count) :
     cur_proj_df = proj_df_dict[cur_proj_name]
     total_area_sum = cur_proj_df['sf'].sum()
     total_proj_areas.append(total_area_sum)
+lst = total_proj_areas    
+avg = Average(lst)
+print("Average area of all projects: " + str(round(avg, 2)) + " sf")
 
-#------------------find one proj graph-------------------#
+print("--------------------------------------------------------------------")
+
+#------------------one project analysis-------------------#
 #proj name for indexing#
 first_proj_name = proj_list[1]
+print("Project name: " + first_proj_name)
 #set up list of space types in the project#
 first_proj_space_list = space_type_dict[first_proj_name]
 #set up list of area sums for each type#
