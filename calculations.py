@@ -85,7 +85,7 @@ print("Number of harvested projects: " + str(len(proj_list)))
 proj_dfs = []
 for x in range(0, len(proj_list)) :
     indices = rooms['project'] == proj_list[x]
-    proj_dfs.append(rooms.loc[indices,["project", "space_type","sf"]])
+    proj_dfs.append(rooms.loc[indices,["project", "space_type","sf","desk_count"]])
 
 #-----------create list of types per project--------------#
 type_list = []
@@ -131,8 +131,11 @@ print("--------------------------------------------------------------------")
 
 #------------------one project analysis-------------------#
 #proj name for indexing#
-first_proj_name = proj_list[1]
+first_proj_name = proj_list[5]
 print("Project name: " + first_proj_name)
+first_proj_df = proj_dfs[5]
+first_proj_desk_count = first_proj_df['desk_count'].sum()
+print("Desk count: " + str(first_proj_desk_count))
 #set up list of space types in the project#
 first_proj_space_list = space_type_dict[first_proj_name]
 #set up list of area sums for each type#
